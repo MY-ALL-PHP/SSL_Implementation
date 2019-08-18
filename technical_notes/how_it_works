@@ -1,0 +1,109 @@
+
+
+# [ https://httpd.apache.org/docs/2.4/ssl/ssl_intro.html ]
+# [ https://en.wikipedia.org/wiki/X.509 ]
+# [ https://www.ibm.com/support/knowledgecenter/en/SSFKSJ_7.1.0/com.ibm.mq.doc/sy10530_.htm ]
+# [ https://www.youtube.com/watch?v=5jpgMXt1Z9Y ]
+_____________________________________________________________
+discussion on public_key cryptography and digial certificate |
+-------------------------------------------------------------
+
+in public key cryptography,
+The key exchange done by defining an algorithm which uses two keys,
+    - public key
+    - private key
+
+> This makes it possible to receive secure messages
+  by simply publishing one key (the public key) and keeping the other secret (the private key).
+> each of which may be used to encrypt a message.
+> If one key is used to encrypt a message then the other must be used to decrypt it.
+
+> though any one can encrypt a message, only owner of the private key can decrypt the message and able to read
+  [message digest & salting makes sense]
+
+
+--
+there is a concern on integrity(not being modified by a middle user) of message,
+a customer needs to send a summary - digest, which bank will compare, upon receive.
+to ensure that intended customer has sent the message.
+
+the prime duty is to send digest securly to bank.
+
+
+--
+Digital Signatures :
+One way to send the digest securely is to include it in a digital signature.
+Digital signatures are created by encrypting a digest of the message and other information (such as a sequence number) with the sender's private key.
+
+Including the digest in the signature means the signature is only good for that message;
+it also ensures the integrity of the message since no one can change the digest and still sign it.
+
+non-repudiation : ensures the intended sender have sent the request
+
+
+A certificate associates a subject.
+a subject could be
+  - public key with the real identity of a server, individual,  or other entity {basically a distinguished name}
+  - the distinguished name is decided with x.509 standard
+
+An X.509 certificate contains a public key and an identity (a [hostname], or an organization, or an individual),
+and is either signed by a certificate authority or self-signed.
+
+
+when ssl handshake happens, this ensures nothing but, it has the private key
+[what happen if a middle man, passes a public key instead of the server public key]
+
+
+ssl handshake
+ client hello  --->
+ server hello  <---
+ server issue a certificate and request certificate from client <---
+
+
+-----------------------------------
+
+certificates are preinstalled with browser.
+
+a server is uniquely identifyable through out internet.
+
+
+though certificate authority's certificate installed in the browser, the authority's public key is available in the browser
+the private key is safe with certificate authority.
+so when browser encrypt sth. only ca will able to decrypt it.
+in the way, from the client to server the communication is sucessful
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+A summary such as this is called a message digest, one-way function or hash function.
+Message digests are used to create a short, fixed-length representation of a longer, variable-length message.
+Digest algorithms are designed to produce a unique digest for each message.
+
+ssl is a session for authentication
+
+cryptography - RSA
+message digest - md5, sha1
+
+
+
